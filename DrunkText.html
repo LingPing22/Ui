@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ສຳລັບເຈົ້າ... ຄົນພິເສດ 🤍</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ================= CSS ພື້ນຖານ ================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Noto Sans Lao', sans-serif;
+            overflow-x: hidden;
+            background-color: #0b0f19; /* สีพื้นหลังตอนแรก (มืด) */
+            color: #fff;
+            transition: background-color 2s ease; /* แอนิเมชันตอนเปลี่ยนฉากมืดไปสว่าง */
+        }
+
+        /* เมื่อเข้าสู่โหมดเซอร์ไพรส์ จะเปลี่ยนคลาสที่ body */
+        body.surprise-mode {
+            background: linear-gradient(-45deg, #fceabb, #f8b500, #ffc3a0, #ffafbd);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            color: #5a4b52;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ================= ຫນ້າຈໍເລີ່ມຕົ້ນ (Start Screen) ================= */
+        #start-screen {
+            position: fixed; inset: 0; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 1000;
+            background-color: #0b0f19; transition: opacity 1s ease;
+        }
+        .btn-start {
+            padding: 12px 30px; font-size: 1.1rem; font-family: inherit; font-weight: 300;
+            background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 30px; cursor: pointer; transition: 0.3s;
+        }
+        .btn-start:hover { background: rgba(255,255,255,0.2); border-color: #fff; }
+
+        /* ================= ສາກເລົ່າເລື່ອງ (Story Screen) ================= */
+        #story-screen {
+            position: fixed; inset: 0; display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 900;
+            padding: 20px; text-align: center;
+        }
+        .story-text {
+            font-size: 1.3rem; line-height: 2; font-weight: 300; opacity: 0;
+            transform: translateY(20px); transition: opacity 2s ease, transform 2s ease;
+            position: absolute; width: 90%; max-width: 600px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .story-text.active { opacity: 1; transform: translateY(0); }
+        .story-text.fade-out { opacity: 0; transform: translateY(-20px); }
+
+        #btn-surprise {
+            display: none; padding: 15px 35px; font-size: 1.2rem; margin-top: 30px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            color: #5a4b52; border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 154, 158, 0.4); font-weight: 600;
+            animation: pulseBtn 2s infinite; opacity: 0; transition: opacity 1.5s;
+        }
+        @keyframes pulseBtn {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 154, 158, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 154, 158, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 154, 158, 0); }
+        }
+
+        /* ================= ຫນ້າເຊີໄພຣ (Surprise Screen) ================= */
+        #surprise-screen {
+            display: none; flex-direction: column; align-items: center;
+            padding: 50px 20px; max-width: 800px; margin: 0 auto;
+            position: relative; z-index: 10; opacity: 0; transition: opacity 2s ease;
+        }
+
+        .title-surprise {
+            font-size: 2.5rem; font-weight: 600; color: #ff6b6b;
+            text-shadow: 2px 2px 0px #fff, 4px 4px 10px rgba(255,107,107,0.3);
+            margin-bottom: 10px; text-align: center;
+        }
+        .subtitle { font-size: 1.1rem; color: #5a4b52; margin-bottom: 40px; text-align: center; }
+
+        /* ກ່ອງຂອງຂວັນ */
+        .gift-box {
+            font-size: 5rem; cursor: pointer; transition: transform 0.3s ease;
+            animation: float 3s ease-in-out infinite; margin-bottom: 20px;
+        }
+        .gift-box:hover { transform: scale(1.1) rotate(5deg); animation: none; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* ຂໍ້ຄວາມສະແດງຄວາມຮູ້ສຶກ (Typewriter) */
+        .message-box {
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
+            padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 100%; max-width: 600px; margin-bottom: 40px; text-align: center;
+            border: 2px dashed #ff9a9e; display: none; opacity: 0; transition: opacity 1s;
+        }
+        .typed-text { font-size: 1.1rem; line-height: 1.8; color: #5a4b52; }
+        .cursor { display: inline-block; width: 2px; background-color: #ff6b6b; animation: blink 1s infinite; }
+
+        /* ຕົວນັບເວລາ */
+        .counter-section { text-align: center; margin-bottom: 50px; width: 100%; }
+        .counter-section h2 { color: #ff6b6b; margin-bottom: 15px; font-weight: 600; font-size: 1.2rem;}
+        #timer {
+            font-size: 1.2rem; font-weight: bold; color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.6); padding: 15px 30px; border-radius: 50px; 
+            display: inline-block; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.1);
+        }
+
+        /* ຄັງຮູບພາບ (Gallery) */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 100%; }
+        .photo-card {
+            background: rgba(255, 255, 255, 0.9); padding: 10px; border-radius: 10px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); text-align: center; 
+            transform: translateY(30px); opacity: 0; transition: 0.8s ease;
+        }
+        .photo-card.visible { opacity: 1; transform: translateY(0); }
+        .photo-card:hover { transform: translateY(-5px) scale(1.03); }
+        .photo-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; margin-bottom: 10px; filter: contrast(90%); }
+        .photo-card p { font-size: 0.95rem; color: #5a4b52; }
+
+        /* ປຸ່ມດົນຕີ */
+        #musicToggle {
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            background: rgba(255, 255, 255, 0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); 
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; 
+            justify-content: center; align-items: center; font-size: 1.2rem; transition: 0.3s;
+        }
+        body.surprise-mode #musicToggle { background: rgba(255,255,255,0.7); color: #ff6b6b; border-color: #ff9a9e; }
+
+        /* ລະອອງດາວ / Confetti */
+        .particle {
+            position: fixed; pointer-events: none; z-index: -1; animation: floatUp linear forwards;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="Always.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicToggle">🎵</button>
+
+    <div id="start-screen">
+        <button id="btn-start" class="btn-start">ແຕະໜ້າຈໍເພື່ອເລີ່ມຕົ້ນ...</button>
+    </div>
+
+    <div id="story-screen">
+        <div class="story-text" id="t1">ຍັງຈື່ມື້ທຳອິດທີ່ເຮົາເຈີກັນໄດ້ບໍ່?</div>
+        <div class="story-text" id="t2">ຮອຍຍິ້ມຂອງເຈົ້າໃນມື້ນັ້ນ...<br>ມັນເຮັດໃຫ້ໂລກຂອງຂ້ອຍປ່ຽນໄປຕະຫຼອດການ.</div>
+        <div class="story-text" id="t3">ຕັ້ງແຕ່ນັ້ນມາ ຂ້ອຍກໍ່ໄດ້ແຕ່ເຝົ້າເບິ່ງເຈົ້າຢູ່ມຸມນີ້...<br>ແອບຍິ້ມຕາມທຸກເທື່ອທີ່ເຫັນເຈົ້າມີຄວາມສຸກ.</div>
+        <div class="story-text" id="t4">ມັນເປັນຄວາມລັບທີ່ຂ້ອຍຊ່ອນໄວ້ໃນໃຈມາຕະຫຼອດ...</div>
+        <div class="story-text" id="t5">ແຕ່ສຳລັບມື້ພິເສດມື້ນີ້...</div>
+        <button id="btn-surprise">ຂ້ອຍມີບາງຢ່າງຢາກໃຫ້ເບິ່ງ 🎁</button>
+    </div>
+
+    <div id="surprise-screen">
+        <h1 class="title-surprise">Happy Birthday! 🎉</h1>
+        <p class="subtitle">ສຳລັບເຈົ້າ... ຄົນທີ່ເປັນຮອຍຍິ້ມຂອງຂ້ອຍ</p>
+
+        <div class="gift-box" id="giftBox">🎁</div>
+
+        <div class="message-box" id="messageBox">
+            <span id="typedText" class="typed-text"></span><span class="cursor">&nbsp;</span>
+        </div>
+
+        <section class="counter-section">
+            <div id="timer">0 ມື້ 0 ຊົ່ວໂມງ 0 ນາທີ 0 ວິນາທີ</div>
+        </section>
+
+        <section class="gallery">
+            <div class="photo-card fade-in">
+                <img src="Ui1.gif" alt="Memory 1" loading="lazy">
+                <p>ແອບຖ່າຍຕອນເຈົ້າເຜີ 📸</p>
+            </div>
+            <div class="photo-card fade-in">
+                <img src="Ui.gif" alt="Memory 2" loading="lazy">
+                <p>ຮອຍຍີ້ມນ່າຮັກ ບໍ່ປ່ຽນເລີຍ </p>
+            </div>
+            <div class="photo-card fade-in">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83164ba?w=500&q=80" alt="Memory 3" loading="lazy">
+                <p>ຢາກບອກວ່າ... ມັກເດີ້ 🤍</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        /* ================= JavaScript ================= */
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let isPlaying = false;
+
+        // ລະບົບດົນຕີ
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) { bgMusic.pause(); musicToggle.innerHTML = "🔇"; } 
+            else { bgMusic.play(); musicToggle.innerHTML = "🎵"; }
+            isPlaying = !isPlaying;
+        });
+
+        // ================= 1. ການຄວບຄຸມສາກເລົ່າເລື່ອງ =================
+        const startBtn = document.getElementById('btn-start');
+        const startScreen = document.getElementById('start-screen');
+        const storyScreen = document.getElementById('story-screen');
+        const btnSurprise = document.getElementById('btn-surprise');
+
+        // Helper function ສໍາລັບການລໍຖ້າ (delay)
+        const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        startBtn.addEventListener('click', async () => {
+            // ເລີ່ມຫລິ້ນເພງ (ສຽງເບົາໆ ກ່ອນ)
+            bgMusic.volume = 0.3;
+            bgMusic.play().catch(e => console.log(e));
+            isPlaying = true;
+
+            // ເຊື່ອງໜ້າທຳອິດ
+            startScreen.style.opacity = '0';
+            await wait(1000);
+            startScreen.style.display = 'none';
+            storyScreen.style.display = 'flex';
+
+            // ເລີ່ມສະແດງຂໍ້ຄວາມເທື່ອລະອັນ
+            const texts = [
+                document.getElementById('t1'), document.getElementById('t2'),
+                document.getElementById('t3'), document.getElementById('t4'),
+                document.getElementById('t5')
+            ];
+
+            for (let i = 0; i < texts.length; i++) {
+                texts[i].classList.add('active'); // ສະແດງຂໍ້ຄວາມ
+                await wait(4000); // ໃຫ້ອ່ານ 4 ວິນາທີ
+                if (i < texts.length - 1) {
+                    texts[i].classList.replace('active', 'fade-out'); // ເຊື່ອງຂໍ້ຄວາມ (ຍົກເວັ້ນອັນສຸດທ້າຍ)
+                    await wait(1000); // ລໍຖ້າກ່ອນສະແດງອັນຕໍ່ໄປ
+                }
+            }
+
+            // ສະແດງປຸ່ມ Surprise
+            btnSurprise.style.display = 'inline-block';
+            setTimeout(() => { btnSurprise.style.opacity = '1'; }, 100);
+        });
+
+        // ================= 2. ເຂົ້າສູ່ສາກເຊີໄພຣ =================
+        const surpriseScreen = document.getElementById('surprise-screen');
+        
+        btnSurprise.addEventListener('click', async () => {
+            storyScreen.style.opacity = '0';
+            document.body.classList.add('surprise-mode'); // ປ່ຽນພື້ນຫຼັງເປັນສີສົດໃສ
+            bgMusic.volume = 0.6; // ເພີ່ມສຽງເພງຂຶ້ນ
+            
+            await wait(1500);
+            storyScreen.style.display = 'none';
+            surpriseScreen.style.display = 'flex';
+            
+            setTimeout(() => { surpriseScreen.style.opacity = '1'; }, 100);
+            createParticles(); // ເລີ່ມປ່ອຍແອນິເມຊັນ
+        });
+
+        // ================= 3. ກ່ອງຂອງຂວັນ ແລະ ຂໍ້ຄວາມສະແດງຄວາມຮູ້ສຶກ =================
+        const giftBox = document.getElementById('giftBox');
+        const messageBox = document.getElementById('messageBox');
+        let isTyping = false;
+
+        const secretMessage = "ສຸກສັນວັນເກີດເດີ້! ຂໍໃຫ້ໂລກນີ້ໃຈດີກັບເຈົ້າ ຄືກັບທີ່ເຈົ້າໃຈດີກັບທຸກຄົນ. ບໍ່ວ່າຈະເກີດຫຍັງຂຶ້ນ, ຢາກໃຫ້ຮູ້ໄວ້ວ່າຍັງມີຄົນໜຶ່ງຢູ່ກົງນີ້ສະເໝີ... ແອບມັກເຈົ້າຢູ່ເດີ້ 🤍 ຮັກສາຮອຍຍິ້ມນີ້ໄວ້ດົນໆນະ.";
+        const typedTextElement = document.getElementById('typedText');
+        let typeIndex = 0;
+
+        giftBox.addEventListener('click', () => {
+            if (!isTyping) {
+                isTyping = true;
+                giftBox.innerHTML = "💌"; // ປ່ຽນຮູບກ່ອງເປັນຈົດໝາຍ
+                giftBox.style.animation = "none";
+                messageBox.style.display = "block";
+                setTimeout(() => { messageBox.style.opacity = "1"; }, 100);
+                setTimeout(typeWriter, 500);
+            }
+        });
+
+        function typeWriter() {
+            if (typeIndex < secretMessage.length) {
+                typedTextElement.innerHTML += secretMessage.charAt(typeIndex);
+                typeIndex++;
+                let speed = Math.random() * 50 + 40;
+                if(secretMessage.charAt(typeIndex-1) === '.' || secretMessage.charAt(typeIndex-1) === '?') speed = 500;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        // ================= 4. ຕົວນັບເວລາແອບມັກ =================
+        const startDate = new Date(2023, 5, 15).getTime(); // ປ່ຽນວັນທີຢູ່ບ່ອນນີ້ (ປີ, ເດືອນເລີ່ມທີ່0, ວັນ)
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('timer').innerHTML = `${days} ມື້ ${hours} ຊົ່ວໂມງ ${minutes} ນາທີ ${seconds} ວິນາທີ`;
+        }, 1000);
+
+        // ================= 5. Lazy Load Animation (ຮູບພາບ) =================
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = { threshold: 0.2 }; 
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            });
+        }, appearOptions);
+        faders.forEach(fader => { appearOnScroll.observe(fader); });
+
+        // ================= 6. ແອນິເມຊັນຟຸ້ງໆຕອນເຊີໄພຣ (Particles) =================
+        function createParticles() {
+            const symbols = ['✨', '🌸', '🤍', '🎉'];
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDuration = Math.random() * 5 + 5 + 's';
+                particle.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
+                document.body.appendChild(particle);
+                setTimeout(() => { particle.remove(); }, 10000);
+            }, 400);
+        }
+    </script>
+</body>
+</html>
