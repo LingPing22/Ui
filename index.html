@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ສຳລັບເຈົ້າ... ຄົນພິເສດ 🤍</title>
+    <title>ສຸກສັນວັນທີ 1 ເມສາຍ້ອນຫຼັງ 🃏</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;600&display=swap" rel="stylesheet">
@@ -160,9 +160,17 @@
             width: 90%; max-width: 400px; padding: 40px 30px 30px;
             border-radius: 8px; position: relative;
             box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            /* ລາຍເສັ້ນຂອງເຈ້ຍ */
+            /* ลายเส้นของกระดาษ */
             background-image: repeating-linear-gradient(transparent, transparent 29px, #e1d8d1 29px, #e1d8d1 30px);
-            line-height: 30px; transform: translateY(50px); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            line-height: 30px; 
+            transform: translateY(50px); 
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+            /* ✨ ส่วนที่เพิ่มเข้ามาเพื่อให้รองรับข้อความยาวๆ ✨ */
+            height: auto;         /* ขยายความสูงตามเนื้อหาที่พิมพ์อัตโนมัติ */
+            max-height: 80vh;     /* จำกัดความสูงไม่ให้ล้นทะลุขอบจอ (80% ของความสูงหน้าจอ) */
+            overflow-y: auto;     /* ถ้าข้อความยาวเกินหน้าจอ จะมีแถบเลื่อนขึ้น-ลงให้ (Scrollbar) */
+            word-wrap: break-word;/* ป้องกันไม่ให้คำยาวๆ ดันกระดาษจนทะลุด้านข้าง */
         }
         .letter-paper h3 { text-align: center; color: #ff6b6b; margin-bottom: 10px; font-family: 'Noto Sans Lao', sans-serif;}
         .letter-paper p { font-size: 1.05rem; }
@@ -177,27 +185,27 @@
 <body>
 
     <audio id="bgMusic" loop>
-        <source src="Always.mp3" type="audio/mpeg">
+        <source src="ทิ้งแต่เก็บ.mp3" type="audio/mpeg">
     </audio>
 
     <button id="musicToggle">🎵</button>
 
     <div id="start-screen">
-        <button id="btn-start" class="btn-start">ແຕະໜ້າຈໍເພື່ອເລີ່ມຕົ້ນ...</button>
+        <button id="btn-start" class="btn-start">ແຕະໜ້າຈໍເພື່ອອ່ານຄວາມໃນໃຈ...</button>
     </div>
 
     <div id="story-screen">
-        <div class="story-text" id="t1">ຍັງຈື່ມື້ທຳອິດທີ່ເຮົາເຈີກັນໄດ້ບໍ່?</div>
-        <div class="story-text" id="t2">ຮອຍຍິ້ມຂອງເຈົ້າໃນມື້ນັ້ນ...<br>ມັນເຮັດໃຫ້ໂລກຂອງຂ້ອຍປ່ຽນໄປຕະຫຼອດການ.</div>
-        <div class="story-text" id="t3">ຕັ້ງແຕ່ນັ້ນມາ ຂ້ອຍກໍ່ໄດ້ແຕ່ເຝົ້າເບິ່ງເຈົ້າຢູ່ມຸມນີ້...<br>ແອບຍິ້ມຕາມທຸກເທື່ອທີ່ເຫັນເຈົ້າມີຄວາມສຸກ.</div>
-        <div class="story-text" id="t4">ມັນເປັນຄວາມລັບທີ່ຂ້ອຍຊ່ອນໄວ້ໃນໃຈມາຕະຫຼອດ...</div>
-        <div class="story-text" id="t5">ແຕ່ສຳລັບມື້ພິເສດມື້ນີ້...</div>
-        <button id="btn-surprise">ຂ້ອຍມີບາງຢ່າງຢາກໃຫ້ເບິ່ງ 🎁</button>
+        <div class="story-text" id="t1">ມື້ນີ້ວັນທີ 1 ເມສາ... ວັນແຫ່ງການຕົວະເນາະ</div>
+        <div class="story-text" id="t2">ຄົນອື່ນອາດຈະໃຊ້ວິທີນີ້ເພື່ອຢອກກັນຫຼິ້ນ...</div>
+        <div class="story-text" id="t3">ແຕ່ສຳລັບຂ້ອຍ... ມັນເປັນຂໍ້ອ້າງດຽວທີ່ເຮັດໃຫ້ກ້າພິມບາງຢ່າງອອກໄປ</div>
+        <div class="story-text" id="t4">ຖ້າເຈົ້າອ່ານແລ້ວບໍ່ໂອເຄ... ກໍແຄ່ຄິດວ່າມັນເປັນເລື່ອງຕະຫຼົກຂອງມື້ນີ້ກໍພໍເດີ້ 😅</div>
+        <div class="story-text" id="t5">ພ້ອມທີ່ຈະອ່ານ "ເລື່ອງຕົວະ" ຂອງຂ້ອຍແລ້ວບໍ່?</div>
+        <button id="btn-surprise">ເປີດອ່ານເລີຍ 🃏</button>
     </div>
 
     <div id="surprise-screen">
-        <h1 class="title-surprise">Happy Birthday! 🎉</h1>
-        <p class="subtitle">ສຳລັບເຈົ້າ... ຄົນທີ່ເປັນຮອຍຍິ້ມຂອງຂ້ອຍ</p>
+        <h1 class="title-surprise">Happy April Fool's Day! ຍ້ອນຫຼັງນ່ະ 🤡</h1>
+        <p class="subtitle">ມື້ທີ່ຄົນມັກເອົາຄວາມຈິງ... ມາເວົ້າເປັນເລື່ອງຕະຫຼົກ</p>
 
         <div class="gift-box" id="giftBox">🎁</div>
 
@@ -206,21 +214,22 @@
         </div>
 
         <section class="counter-section">
+            <h2>ເວລາທີ່ແອບມັກເຈົ້າ (ແຕ່ບໍ່ກ້າບອກ)...</h2>
             <div id="timer">0 ມື້ 0 ຊົ່ວໂມງ 0 ນາທີ 0 ວິນາທີ</div>
         </section>
 
         <section class="gallery">
             <div class="photo-card fade-in">
                 <img src="Ui1.gif" alt="Memory 1" loading="lazy">
-                <p>ແອບຖ່າຍຕອນເຈົ້າເຜີ 📸</p>
+                <p>ຫນ້າບູດ ຄຶ ຜັກກູດ ເເທ້ 🤡</p>
             </div>
             <div class="photo-card fade-in">
                 <img src="Ui.gif" alt="Memory 2" loading="lazy">
-                <p>ຮອຍຍີ້ມນ່າຮັກ ບໍ່ປ່ຽນເລີຍ </p>
+                <p>ມື້ນີ້ວັນຕົວະ ແຕ່ຮອຍຍິ້ມນີ້ຂອງແທ້ 💖</p>
             </div>
             <div class="photo-card fade-in">
-                <img src="https://images.unsplash.com/photo-1518199266791-5375a83164ba?w=500&q=80" alt="Memory 3" loading="lazy">
-                <p>ຢາກບອກວ່າ... ມັກເດີ້ 🤍</p>
+                <img src="lastui.gif" alt="Memory 3" loading="lazy">
+                <p>ຫລົງ ຮອຍຍີ້ມລູກສາວໃຜນໍ້ 👀</p>
             </div>
         </section>
     </div>
@@ -230,12 +239,13 @@
     <div id="letter-modal">
         <div class="letter-paper" id="letter-paper">
             <span class="close-letter-btn" id="close-letter">✖</span>
-            <h3>ຄວາມໃນໃຈ... 🤍</h3>
+            <h3>ຄວາມຈິງໃນວັນ April Fool ຍ້ອນຫຼັງ 🤍</h3>
             <p>
-                ທີ່ຈິງແລ້ວ... ຂ້ອຍຢາກບອກເລື່ອງນີ້ມາດົນແລ້ວ ແຕ່ບໍ່ກ້າຈັກເທື່ອ.<br>
-                ຂອບໃຈທີ່ເຂົ້າມາເປັນຄວາມສົດໃສໃນຊີວິດຂອງຂ້ອຍເດີ້.<br>
-                ທຸກຄັ້ງທີ່ໄດ້ລົມນຳ ຫຼື ເຫັນຮອຍຍິ້ມຂອງເຈົ້າ ມັນເຮັດໃຫ້ມື້ທີ່ທຳມະດາກາຍເປັນມື້ທີ່ພິເສດສະເໝີ.<br><br>
-                ຖ້າເປັນໄປໄດ້... ຂ້ອຍຂໍເປັນຄົນທີ່ເບິ່ງແຍງຮອຍຍິ້ມນີ້ຕໍ່ໄປໄດ້ບໍ່? 😊
+                ທີ່ຈິງແລ້ວ... ເລື່ອງຕອນນັ້ນ ຕອນທີ່ຂ້ອຍເລືອກທິ່ຈະອອກໄປຈາກເຈົ້າ, ໃນຕອນນັ້ນເຈົ້າສິຄິດວ່າມັນໄຮ້ສະສາລະເເຕ່ຄວາມຈິງເເລ້ວ....... ຄຶ່ຂ້ອຍບໍ່ມັກໂຕເອງເລີຍທີ່ເຮັດໂຕບໍ່ດີໃສ່ເຈົ້າເເບບນັ້ນ ເເຮງຮູ້ສຶກຫຼາຍສຳໃດ , ມັນເເຮງບໍ່ດີຕໍ່ເຈົ້າ" 🥲<br><br>
+                ຂ້ອຍເລີຍຄິດວ່າການທີ່ຖອຍອອກມາເເເລ້ວບໍ່ຮູ້ສືກຫຍັງເລິຍມັນນ່າຈະ ເຊບເຮົາທັ້ງ2ຄົນ ອີກຢ່າງຂ້ອຍຢ້ານທີ່ຈະເສຍເຈົ້າໄປເເຕ່ຄວາມຈິງ... ມັນມິຄວາມເປັນຫ່ວງໃນໂຕເຈົ້າຫຼາຍໆຢ່າງບໍ່ວ່າຈະ ເລື່ອງສຸຂະພາບບໍ , ເລື່ອງການໃຊ້ຊິວິດ ອາຫານການກີນ<br><br>
+                ມັນເລີຍເຮັດໃຫ້ຂ້ອຍຮູ້ເລີຍວ່າຂ້ອຍບໍ່ມັກລູກສາວຄົນນີ້ຈາກໃຜນອກເລີຍ , ຕອນທຳອິດ ຮອດຕອນນີ້ຂ້ອຍຍັງຮູ້ສືກດີກັບລູກສາວຄົນນີ້ບໍ່ລົດລົງ ເເລ້ວມັນເພີ່ມຂື້ນເລື່ອຍໆຢູ່<br><br>
+                ສະນັ້ນເເລ້ວ , (ຈຸດປະສົງຂ້ອຍມື້ນີ້ທີ່ເຮັດໃຫ້ເຈົ້າ ເເຄ່ຢາກໃຫ້ເຈົ້າຮັບຮູ້ໄວ້ຊື່ ຂ້ອຍບໍ່ຢາກໄດ້ຄຳຕອບຫຍັງເລີຍ , ເເລະມັນສິເສຍດາຍກວ່ານີ້ຖ້າຂ້ອຍບໍ່ໄດ້ບອກທຸກສີ່ງທຸກຢ່າງທີ່ຂ້ອບເກັບມາ 3 ປິ ໃຫ້ເຈົ້າຮັບຮູ້ ອີກຢ່າງກໍເປັນປີສຸດທ້າຍເເລ້ວທີ່ຈະເຫັນເຈົ້າ) .ຂ້ອຍຍັງຄົງເບິ່ງທຸກການເຕີບໂຕຂອງເຈົ້າເດີ່ ອຸງໆ 🦭<br><br>
+                Happy birthday ຍ້ອນຫຼັງ drrrrrrr ເເລະ april fool day ຍ້ອນຫຼັງນະ ສົ່ງໃຫ້ຊ້າບໍ່ວ່າກັນນ່ະ
             </p>
         </div>
     </div>
@@ -301,7 +311,6 @@
             
             setTimeout(() => { 
                 surpriseScreen.style.opacity = '1'; 
-                // ສະແດງຈົດໝາຍລັບຫຼັງຈາກເຂົ້າໜ້າເຊີໄພຣ 3 ວິນາທີ
                 setTimeout(() => {
                     secretEnvelope.style.display = 'block';
                     setTimeout(() => { secretEnvelope.style.opacity = '1'; }, 50);
@@ -314,14 +323,15 @@
         const messageBox = document.getElementById('messageBox');
         let isTyping = false;
 
-        const secretMessage = "ສຸກສັນວັນເກີດເດີ້! ຂໍໃຫ້ໂລກນີ້ໃຈດີກັບເຈົ້າ ຄືກັບທີ່ເຈົ້າໃຈດີກັບທຸກຄົນ. ບໍ່ວ່າຈະເກີດຫຍັງຂຶ້ນ, ຢາກໃຫ້ຮູ້ໄວ້ວ່າຍັງມີຄົນໜຶ່ງຢູ່ກົງນີ້ສະເໝີ... ແອບມັກເຈົ້າຢູ່ເດີ້ 🤍 ຮັກສາຮອຍຍິ້ມນີ້ໄວ້ດົນໆນະ.";
+        // ຂໍ້ຄວາມທີ່ປ່ຽນໃໝ່ໃຫ້ເຂົ້າກັບ April Fool
+        const secretMessage = "ທີ່ຜ່ານມາ... ເຫັນເຈົ້າເສົ້າແລ້ວຂ້ອຍໂຄດດີໃຈເລີຍ. ຍິ່ງເຫັນເຈົ້າມີຄວາມສຸກ ຂ້ອຍແຮ່ງຊັງ! ຖ້າໄດ້ເປັນແຟນກັນ ຂ້ອຍສິບໍ່ດູແລເຈົ້າເລີຍ ສິປ່ອຍໃຫ້ໄຫ້ທຸກມື້ເລີຍຄອຍເບິ່ງ! ບອກເລີຍວ່າທີ່ຜ່ານມາບໍ່ເຄີຍມັກເຈົ້າຈັກໜ້ອຍ! 🤡 (ອ່ານຈົບແລ້ວແມ່ນບໍ່? ... Happy April Fool's Day ເດີ້! ຂໍ້ຄວາມຂ້າງເທິງນັ້ນ 'ຕົວະ' ໝົດທຸກຢ່າງເລີຍ 🤍 ຄວາມຈິງຄືກົງກັນຂ້າມໝົດທຸກຢ່າງນະ ຮູ້ໄວ້ແນ່)"
         const typedTextElement = document.getElementById('typedText');
         let typeIndex = 0;
 
         giftBox.addEventListener('click', () => {
             if (!isTyping) {
                 isTyping = true;
-                giftBox.innerHTML = "🎁✨"; 
+                giftBox.innerHTML = "🃏✨"; 
                 giftBox.style.animation = "none";
                 messageBox.style.display = "block";
                 setTimeout(() => { messageBox.style.opacity = "1"; }, 100);
@@ -339,7 +349,7 @@
             }
         }
 
-        const startDate = new Date(2023, 5, 15).getTime(); 
+        const startDate = new Date(2023, 5, 15).getTime(); // ສາມາດປ່ຽນວັນທີທີ່ເລີ່ມມັກໄດ້ບ່ອນນີ້
 
         setInterval(() => {
             const now = new Date().getTime();
@@ -363,7 +373,7 @@
         faders.forEach(fader => { appearOnScroll.observe(fader); });
 
         function createParticles() {
-            const symbols = ['✨', '🌸', '🤍', '🎉'];
+            const symbols = ['🃏', '🤡', '🤍', '👀'];
             setInterval(() => {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
